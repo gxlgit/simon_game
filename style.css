@@ -53,9 +53,33 @@ a {
 
 }
 
-.redBttn{
+
+
+
+
+
+.red-bttn{
   background-color: red;
+  opacity: .5;
 }
-.blueBttn{
+.blue-bttn{
   background-color: blue;
+  opacity: .5;
 }
+/*this class can be added to make a circle button flash*/
+.flash {
+  opacity: 1;
+  background-color: yellow;
+  /*animation-name: colorFlash;
+  animation-duration: 4s;*/
+  /*animation: flash 1s ease-out;
+  animation-iteration-count: 1;*/
+}
+
+
+/*@keyframes colorFlash {
+
+    /*0% { opacity: .5; }
+    50% { opacity: 1 }
+    100% { opacity: .5}
+}*/

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    <script src ='script.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src ='script.js' defer></script>
 
     </script>
     <title>Simon</title>
@@ -13,8 +13,8 @@
     <header>
       <h1>SIMON</h1>
       <nav>
-        <a href="#">Play</a>
-        <a href="#">Rules</a>
+        <a href="#Play">Play</a>
+        <a href="#Rules">Rules</a>
         <a href="#">About</a>
       </nav>
       <div class="score">
@@ -24,12 +24,11 @@
     </header>
     <main>
       <div id='Play' class="game">
-        <div class="circle redBttn"></div>
-        <div class="circle blueBttn"></div>
-
+        <div class="circle red-bttn"></div>
+        <div class="circle blue-bttn"></div>
       </div>
-      <button type="button" name="start-bttn">START</button>
-      <div id ='rules' class='rules'>
+      <button type="button" class="start-bttn">START</button>
+      <div id ='Rules' class='rules'>
         <p>The rules of the game will go here</p>
       </div>
 
