@@ -49,37 +49,14 @@ function flashColorPattern() {
 
     let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-bttn')
     console.log(currCircle)
-    currCircle.addClass('flash')
-
-
+    let thetime = x
+    setTimeout(function(){currCircle.addClass('flash')
+                          console.log('timer '+ thetime)},thetime*500)
 
     setTimeout(function(){
          currCircle.removeClass("flash")
-         console.log('timeout '+ currCircle)
-       console.log("inAddClass")},1000)
+       console.log("inREmoveClass")},(thetime+1)*500)
 
-
-
-
-    // console.log(currCircle)
-    // if( x > 0 ){
-    //
-    //   console.log('in if')
-    //
-    //     setTimeout(addFlash(currCircle),1000)
-    //     //set a timer to allow full flash
-    //     console.log("setTimeout")
-    //     setTimeout(removeFlash(currCircle), 1000)
-    //
-    // }//end if
-    // else{
-    //   console.log('in else' + $(currCircle))
-    //     $(currCircle).addClass('flash')
-    //     //set a timer to allow full flash
-    //     console.log("setTimeout")
-    //     setTimeout(removeFlash(currCircle), 1000);
-    //
-    // }
   }
 }
 
