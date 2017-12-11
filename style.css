@@ -1,0 +1,48 @@
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  color: white;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.top-nav {
+  display: flex;
+  justify-content: center;
+  border: solid 1px white;
+}
+
+li {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+
+
+.score {
+  display: flex;
+  justify-content: center;
+  border: solid 1px white;
+}
+
+.game {
+  display: flex;
+  justify-content: space-around;
+  border: solid 1px white;
+}
+
+.circle {
+  border: solid 1px white;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+
+}
