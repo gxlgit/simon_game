@@ -9,11 +9,12 @@ let playerScore = 0
 let simonScore = 0
 
 let randomColorPattern = []
-let numOfFlashes = 2
+let numOfFlashes = 3
 let colorsAvailable = ['red', 'blue']
 let playerColorPattern =[]
 
 
+//FIX-generate the circles from javascript, so that number of circles can vary
 
 //Setup JQuery objects and listeners
 let startButton = $('.start-bttn')
@@ -57,39 +58,60 @@ function removeFlash(theCircle) {
 
 function flashColorPattern() {
 
-  for( x in randomColorPattern){
+//  for( x in randomColorPattern){
     // console.log('loop'+x)
 
-    let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-circle')
+    // let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-circle')
     // console.log(currCircle)
-    let theTime = x
-//FIX think about setting this within an interval????
+    //let theTime = x
+
+let x = 0
+  let theTimer = setInterval(function(){
+    console.log("the interval: " + x)
+    let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-circle')
+    if(x < randomColorPattern.length){
     setTimeout(function(){
                           currCircle.addClass('flash')
-                        },(theTime+.5)*300)
+                        },(.5)*500)
 
-    setTimeout(function(){currCircle.removeClass("flash")},(theTime+1.5)*300)
+    setTimeout(function(){currCircle.removeClass("flash")},(1.5)*500)
+  }//end if
+  else{
+    clearInterval(theTimer)
+  }//end else
+  x++
+}, 1000)//end set interval
 
-  }//end for
+   //this kind of works
+    // setTimeout(function(){
+    //                       currCircle.addClass('flash')
+    //                     },(theTime+.5)*300)
+    //
+    // setTimeout(function(){currCircle.removeClass("flash")},(theTime+1.5)*300)
+
+//  }//end for
 }//end flashColorPattern()
 
 function checkIfCorrect(){
-  console.log('checkIfCorrect')
-  console.log($(this).attr('data-color'))
+  // console.log('checkIfCorrect')
+  // console.log($(this).attr('data-color'))
   //might have to keep track of user clicks if this doesntwork
   if(parseInt($(this).attr('data-color'), 10) === randomColorPattern.shift())
   {
-    console.log('arraylength ' +randomColorPattern.length)
     if( randomColorPattern.length === 0 ){
       alert( "You Win!")
+      playerScore += 1
+      $('.player-score').html('You: ' + playerScore)
       turnOffPlayerClickEvents()
     }
     //else
     //then keep going
   }
   else{
-    console.log("You Lose!")
+    // console.log("You Lose!")
     alert("You Lose!")
+    simonScore += 1
+    $('.simon-score').html('Simon: ' + simonScore)
     turnOffPlayerClickEvents()
   }
 }//end checkIfCorrect()

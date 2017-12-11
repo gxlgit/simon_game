@@ -69,7 +69,7 @@ a {
 /*this class can be added to make a circle button flash*/
 .flash {
   opacity: 1;
-  background-color: yellow;
+  /*background-color: yellow;*/
   /*animation-name: colorFlash;
   animation-duration: 4s;*/
   /*animation: flash 1s ease-out;
