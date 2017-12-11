@@ -12,17 +12,20 @@ header {
   align-items: center;
 
 }
-
-.top-nav {
+nav{
+  border: solid 1px white;
+  /*display: flex;
+  justify-content: center;
+  align-items: center;*/
+}
+nav {
   display: flex;
   justify-content: center;
   border: solid 1px white;
 }
 
-li {
-  list-style-type: none;
-}
 a {
+  padding: 5px;
   text-decoration: none;
 }
 
@@ -31,6 +34,9 @@ a {
   display: flex;
   justify-content: center;
   border: solid 1px white;
+}
+.score div {
+  padding: 5px;
 }
 
 .game {
@@ -45,4 +51,11 @@ a {
   height: 200px;
   width: 200px;
 
+}
+
+.redBttn{
+  background-color: red;
+}
+.blueBttn{
+  background-color: blue;
 }
