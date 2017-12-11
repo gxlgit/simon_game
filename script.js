@@ -33,12 +33,12 @@ function generateRandomColorPattern() {
 }//end generateRandomColorPattern()
 
 function addFlash(theCircle) {
-  this.$(theCircle).addClass('flash')
-  console.log('added flash ' + this.$(theCircle))
+  theCircle.addClass('flash')
+  console.log('added flash ' + theCircle)
 
 }
 function removeFlash(theCircle) {
-  $(theCircle).removeClass('flash')
+  theCircle.removeClass('flash')
   console.log('remove flash')
 }
 
@@ -49,16 +49,22 @@ function flashColorPattern() {
 
     let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-bttn')
     console.log(currCircle)
-    let thetime = x
-    setTimeout(function(){currCircle.addClass('flash')
-                          console.log('timer '+ thetime)},thetime*500)
+    let theTime = x
+    //setTimeout( addFlash(currCircle), theTime*500)
+    //setTimeout( removeFlash(currCircle), (theTime+1)*100)
 
-    setTimeout(function(){
-         currCircle.removeClass("flash")
-       console.log("inREmoveClass")},(thetime+1)*500)
 
-  }
-}
+  setTimeout(function(){
+                          currCircle.addClass('flash')
+                          console.log('timer '+ theTime)
+
+                        },(theTime+.5)*300)
+
+                        setTimeout(function(){currCircle.removeClass("flash")
+                                               console.log("inREmoveClass")},(theTime+1.5)*300)
+
+  }//end for
+}//end flashColorPattern()
 
 
 function startGame( event ) {
