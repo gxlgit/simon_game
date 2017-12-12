@@ -3,6 +3,7 @@ body {
   flex-direction: column;
   background-color: black;
   color: white;
+  font-family: arial;
 }
 
 header {
@@ -59,21 +60,12 @@ a {
 }
 
 
-.circle:active{
+.circle:active {
   opacity: 1;
-  border: solid 1px white;
+  border: solid 4px white;
 
 }
 
-
-
-/*.red-circle{
-  background-color: red;
-
-}
-.blue-circle{
-  background-color: blue;
-}*/
 /*this class can be added to make a circle button flash*/
 .flash {
   opacity: 1;
@@ -91,3 +83,7 @@ a {
     50% { opacity: 1 }
     100% { opacity: .5}
 }*/
+
+.rules {
+  font-family: arial;
+}

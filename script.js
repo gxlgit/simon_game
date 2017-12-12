@@ -11,7 +11,7 @@ let simonScore = 0
 let randomColorPattern = []
 let numOfFlashes = 4
 let colorsAvailable = ['red', 'blue', 'yellow', 'green']
-// let playerColorPattern =[]
+
 
 
 //Setup JQuery objects and listeners
@@ -37,6 +37,7 @@ function turnOffPlayerClickEvents(){
     $('.' + colorsAvailable[x] +'-circle').off()
   }//end for
   //FIX  need to enable startButton
+  $('.start-bttn').prop('disabled', false)
 }
 
 function generateRandomColorPattern() {
@@ -48,59 +49,38 @@ function generateRandomColorPattern() {
   console.log("the pattern " + randomColorPattern)
 }//end generateRandomColorPattern()
 
-// function addFlash(theCircle) {
-//   theCircle.addClass('flash')
-//   console.log('added flash ' + theCircle)
-//
-// }
-// function removeFlash(theCircle) {
-//   theCircle.removeClass('flash')
-//   console.log('remove flash')
-// }
 
 function flashColorPattern() {
-
-//  for( x in randomColorPattern){
-    // console.log('loop'+x)
-
-    // let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-circle')
-    // console.log(currCircle)
-    //let theTime = x
-
-let x = 0
+  //this function sets an setInterval
+  //every 1 sec it will set the turnFlashOn and turnFlashOff timers for each circle
+  //in the randomColorPattern
+  //this keeps colors from flashing at the same time or out of order
+  let x = 0
   let theTimer = setInterval(function(){
-    console.log("the interval: " + x)
-    let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-circle')
-    if(x < randomColorPattern.length){
-    setTimeout(function(){
-                          currCircle.addClass('flash')
-                        },(.5)*500)
 
-    setTimeout(function(){currCircle.removeClass("flash")},(1.5)*500)
-  }//end if
-  else{
-    clearInterval(theTimer)
-  }//end else
-  x++
-}, 1000)//end set interval
+      let currCircle = $('.' + colorsAvailable[randomColorPattern[x]] +'-circle')
 
-   //this kind of works
-    // setTimeout(function(){
-    //                       currCircle.addClass('flash')
-    //                     },(theTime+.5)*300)
-    //
-    // setTimeout(function(){currCircle.removeClass("flash")},(theTime+1.5)*300)
+      if(x < randomColorPattern.length){
+        setTimeout(function(){currCircle.addClass('flash')},(.5)*500)
+        setTimeout(function(){currCircle.removeClass("flash")},(1.5)*500)
+      }//end if
+      else{
+        //if at the end randomColorPattern turn off Interval Timer
+        clearInterval(theTimer)
+      }//end else
+      x++
+    }, 1000)//end set interval
 
-//  }//end for
 }//end flashColorPattern()
 
 function checkIfCorrect(){
-  // console.log('checkIfCorrect')
-  // console.log($(this).attr('data-color'))
-  //might have to keep track of user clicks if this doesntwork
+  //function checks to see if the circle clicked
+  //matches the first(next) item in the randomColorPattern
+
   if(parseInt($(this).attr('data-color'), 10) === randomColorPattern.shift())
   {
     if( randomColorPattern.length === 0 ){
+      //FIX change DOM to say You win!
       alert( "You Win!")
       playerScore += 1
       $('.player-score').html('You: ' + playerScore)
@@ -110,7 +90,7 @@ function checkIfCorrect(){
     //then keep going
   }
   else{
-    // console.log("You Lose!")
+    //FIX change DOM to say You Lose!
     alert("You Lose!")
     simonScore += 1
     $('.simon-score').html('Simon: ' + simonScore)
@@ -120,22 +100,24 @@ function checkIfCorrect(){
 
 
 
-
-
 function startGame( event ) {
     console.log('Start game has been clicked')
   //FIX- disable start button???
+
+  $('.start-bttn').prop('disabled', true)
 
   //on click generate random color pattern
   generateRandomColorPattern()
 
   // DOM message for player to begin
+  //FIX message direct to DOM
   alert('Player Ready?')
 
   //when player clicks ready, flash the random color pattern
   flashColorPattern()
 
-  console.log("assuming the user won't try to play until all the colors flash...")
+  //FIX-- check logic of this?
+  // console.log("assuming the user won't try to play until all the colors flash...")
   //could set an interval to check if player toggle set to true???
   //set player toggle equal to true
   playerToggle = true
