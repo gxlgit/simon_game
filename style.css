@@ -55,25 +55,25 @@ a {
   border-radius: 50%;
   height: 200px;
   width: 200px;
-
+  background-color: white;
 }
 
 
 .circle:active{
   opacity: 1;
   border: solid 1px white;
+
 }
 
 
 
-.red-circle{
+/*.red-circle{
   background-color: red;
 
 }
 .blue-circle{
   background-color: blue;
-
-}
+}*/
 /*this class can be added to make a circle button flash*/
 .flash {
   opacity: 1;

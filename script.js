@@ -9,22 +9,24 @@ let playerScore = 0
 let simonScore = 0
 
 let randomColorPattern = []
-let numOfFlashes = 3
-let colorsAvailable = ['red', 'blue']
-let playerColorPattern =[]
+let numOfFlashes = 4
+let colorsAvailable = ['red', 'blue', 'yellow', 'green']
+// let playerColorPattern =[]
 
-
-//FIX-generate the circles from javascript, so that number of circles can vary
 
 //Setup JQuery objects and listeners
 let startButton = $('.start-bttn')
 startButton.on('click', startGame)
 
-let redCircle = $('.red-bttn')
-let blueCircle = $('.blue-bttn')
+//populate HTML with circles
+for(x in colorsAvailable){
+  $('.game').append(`<div class='circle ${colorsAvailable[x]}-circle' data-color=${x}></div>`)
+  $(`.${colorsAvailable[x]}-circle`).css('background-color', colorsAvailable[x])
+}
+
 
 function turnOnPlayerClickEvents(){
-  playerColorPattern = []
+  // playerColorPattern = []
   for( x in colorsAvailable){
     $('.' + colorsAvailable[x] +'-circle').on('click', checkIfCorrect)
   }//end for
@@ -46,15 +48,15 @@ function generateRandomColorPattern() {
   console.log("the pattern " + randomColorPattern)
 }//end generateRandomColorPattern()
 
-function addFlash(theCircle) {
-  theCircle.addClass('flash')
-  console.log('added flash ' + theCircle)
-
-}
-function removeFlash(theCircle) {
-  theCircle.removeClass('flash')
-  console.log('remove flash')
-}
+// function addFlash(theCircle) {
+//   theCircle.addClass('flash')
+//   console.log('added flash ' + theCircle)
+//
+// }
+// function removeFlash(theCircle) {
+//   theCircle.removeClass('flash')
+//   console.log('remove flash')
+// }
 
 function flashColorPattern() {
 
