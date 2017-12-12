@@ -36,10 +36,13 @@ function turnOnPlayerClickEvents(){
   for( x in colorsAvailable){
     let theCircle =$('.' + colorsAvailable[x] +'-circle')
     theCircle.on('click', checkIfCorrect)
+
+
     // theCircle.addClass('circle-active:active')
     // theCircle.on('mouseover', function(){$(this.addClass('circle-active')}).on('mouseout',
     //                           function(){$(this).removeClass('circle-active')})
   }//end for
+
 }//end turnOnPlayerClickEvents()
 
 function turnOffPlayerClickEvents(){
@@ -91,19 +94,28 @@ function flashColorPattern() {
 function checkIfCorrect(){
   //function checks to see if the circle clicked
   //matches the first(next) item in the randomColorPattern
-
+ console.log('clicked color'+ parseInt($(this).attr('data-color'), 10))
   if(parseInt($(this).attr('data-color'), 10) === randomColorPattern.shift())
   {
     if( randomColorPattern.length === 0 ){
       //FIX change DOM to say You win!
       if(currentLevel === levels.length){
-        alert("You Win!")
+        let dialog = $('.game-messages')
+        dialog.html('You Win!')
+        dialog.show()
+        setTimeout(function(){ dialog.hide()}, 1000)
+        //alert("You Win!")
         //FIX-disable start
+        // $('.start-bttn').prop('disabled', true)
         //FIX-prompt New Game?
 
       }
       else {
-        alert( "Level Up!")
+        //alert( "Level Up!")
+        let dialog = $('.game-messages')
+        dialog.html('Level Up!')
+        dialog.show()
+        setTimeout(function(){ dialog.hide()}, 1000)
         currentLevel += 1
         $('.level').html('Level: ' + currentLevel)
       }
@@ -124,7 +136,7 @@ function checkIfCorrect(){
   }
 }//end checkIfCorrect()
 
-
+//FIX make New Game function
 
 function startGame( event ) {
   //disable start button
@@ -135,7 +147,18 @@ function startGame( event ) {
 
   // DOM message for player to begin
   //FIX message direct to DOM
-  alert('Player Ready?')
+  // alert('Player Ready?')
+  // $('main').append(`<dialog open> Player Ready? </dialog>`)
+  let dialog = $('.game-messages')
+  dialog.html('Get Ready!')
+  dialog.show()
+  setTimeout(function(){ dialog.hide()}, 1000)
+  // dialog.html('Set')
+  // dialog.show()
+  // setTimeout(function(){ dialog.hide()}, 1000)
+  // dialog.html('Go')
+  // dialog.show()
+  // setTimeout(function(){ dialog.hide()}, 1000)
 
   //when player clicks ready, flash the random color pattern
   flashColorPattern()
@@ -148,8 +171,13 @@ function startGame( event ) {
                             if(playerToggle){
                               clearInterval(checkIfPlayerTurn)
                               turnOnPlayerClickEvents()
+                              dialog.html('Your Turn!')
+                              dialog.show()
+                              setTimeout(function(){ dialog.hide()}, 1000)
                             }
                           },2000)//end setInterval
+
+
 
 
 
