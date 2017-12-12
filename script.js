@@ -104,7 +104,7 @@ function checkIfCorrect(){
         dialog.html('You Win!')
         dialog.show()
         setTimeout(function(){ dialog.hide()}, 1000)
-        //alert("You Win!")
+
         //FIX-disable start
         // $('.start-bttn').prop('disabled', true)
         //FIX-prompt New Game?
@@ -128,8 +128,10 @@ function checkIfCorrect(){
     //then keep going
   }
   else{
-    //FIX change DOM to say You Lose!
-    alert("Try Again!")
+    let dialog = $('.game-messages')
+    dialog.html('You Lose')
+    dialog.show()
+    setTimeout(function(){ dialog.hide()}, 1000)
     simonScore += 1
     $('.simon-score').html('Simon: ' + simonScore)
     turnOffPlayerClickEvents()
@@ -146,26 +148,18 @@ function startGame( event ) {
   generateRandomColorPattern()
 
   // DOM message for player to begin
-  //FIX message direct to DOM
-  // alert('Player Ready?')
-  // $('main').append(`<dialog open> Player Ready? </dialog>`)
+
   let dialog = $('.game-messages')
   dialog.html('Get Ready!')
   dialog.show()
   setTimeout(function(){ dialog.hide()}, 1000)
-  // dialog.html('Set')
-  // dialog.show()
-  // setTimeout(function(){ dialog.hide()}, 1000)
-  // dialog.html('Go')
-  // dialog.show()
-  // setTimeout(function(){ dialog.hide()}, 1000)
+
 
   //when player clicks ready, flash the random color pattern
   flashColorPattern()
 
-  //FIX-- check logic of this?
-  // console.log("assuming the user won't try to play until all the colors flash...")
-  //could set an interval to check if player toggle set to true???
+
+  //set an interval to check if player toggle set to true
 
   let checkIfPlayerTurn = setInterval( function(){
                             if(playerToggle){
