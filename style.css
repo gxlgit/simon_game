@@ -10,9 +10,14 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
-nav{
+h1 {
+/*font-family: 'Press Start 2P', cursive;*/
+font-family: 'Bungee Shade', cursive;
+  font-size: 150px;
+  border: solid 1px white;
+}
+nav {
   border: solid 1px white;
   /*display: flex;
   justify-content: center;
@@ -46,7 +51,7 @@ a {
 }
 
 .circle {
-  border: solid 1px white;
+  opacity: .5;
   border-radius: 50%;
   height: 200px;
   width: 200px;
@@ -54,17 +59,20 @@ a {
 }
 
 
-
+.circle:active{
+  opacity: 1;
+  border: solid 1px white;
+}
 
 
 
 .red-circle{
   background-color: red;
-  opacity: .5;
+
 }
 .blue-circle{
   background-color: blue;
-  opacity: .5;
+
 }
 /*this class can be added to make a circle button flash*/
 .flash {
