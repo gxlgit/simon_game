@@ -7,9 +7,15 @@
 let playerToggle = false
 let playerScore = 0
 let simonScore = 0
+let currentLevel = 1
+let levels = [{level:1, flashes:4},
+              {level:2, flashes:5},
+              {level:3, flashes:6},
+              {level:4, flashes:7},
+              {level:5, flashes:8}]
 
 let randomColorPattern = []
-let numOfFlashes = 4
+// let numOfFlashes = 4
 let colorsAvailable = ['red', 'blue', 'yellow', 'green']
 
 
@@ -28,22 +34,28 @@ for(x in colorsAvailable){
 function turnOnPlayerClickEvents(){
   // playerColorPattern = []
   for( x in colorsAvailable){
-    $('.' + colorsAvailable[x] +'-circle').on('click', checkIfCorrect)
+    let theCircle =$('.' + colorsAvailable[x] +'-circle')
+    theCircle.on('click', checkIfCorrect)
+    // theCircle.addClass('circle-active:active')
+    // theCircle.on('mouseover', function(){$(this.addClass('circle-active')}).on('mouseout',
+    //                           function(){$(this).removeClass('circle-active')})
   }//end for
 }//end turnOnPlayerClickEvents()
 
 function turnOffPlayerClickEvents(){
   for( x in colorsAvailable){
-    $('.' + colorsAvailable[x] +'-circle').off()
+     $('.' + colorsAvailable[x] +'-circle').off() //.removeClass('circle-active')
   }//end for
 
   //enable startButton
   $('.start-bttn').prop('disabled', false)
+
+  playerToggle = false
 }
 
 function generateRandomColorPattern() {
   randomColorPattern=[]
-  for( i = 0; i < numOfFlashes; i++){
+  for( i = 0; i < levels[currentLevel-1].flashes; i++){
     //get a random number between 0 and colorsAvailble.length
     randomColorPattern.push( Math.floor(Math.random() * colorsAvailable.length ))
   }
@@ -68,6 +80,8 @@ function flashColorPattern() {
       else{
         //if at the end randomColorPattern turn off Interval Timer
         clearInterval(theTimer)
+        //set player toggle equal to true
+        playerToggle = true
       }//end else
       x++
     }, 1000)//end set interval
@@ -82,9 +96,20 @@ function checkIfCorrect(){
   {
     if( randomColorPattern.length === 0 ){
       //FIX change DOM to say You win!
-      alert( "You Win!")
+      if(currentLevel === levels.length){
+        alert("You Win!")
+        //FIX-disable start
+        //FIX-prompt New Game?
+
+      }
+      else {
+        alert( "Level Up!")
+        currentLevel += 1
+        $('.level').html('Level: ' + currentLevel)
+      }
       playerScore += 1
       $('.player-score').html('You: ' + playerScore)
+
       turnOffPlayerClickEvents()
     }
     //else
@@ -92,7 +117,7 @@ function checkIfCorrect(){
   }
   else{
     //FIX change DOM to say You Lose!
-    alert("You Lose!")
+    alert("Try Again!")
     simonScore += 1
     $('.simon-score').html('Simon: ' + simonScore)
     turnOffPlayerClickEvents()
@@ -119,9 +144,16 @@ function startGame( event ) {
   // console.log("assuming the user won't try to play until all the colors flash...")
   //could set an interval to check if player toggle set to true???
 
-  //set player toggle equal to true
-  playerToggle = true
+  let checkIfPlayerTurn = setInterval( function(){
+                            if(playerToggle){
+                              clearInterval(checkIfPlayerTurn)
+                              turnOnPlayerClickEvents()
+                            }
+                          },2000)//end setInterval
 
-  turnOnPlayerClickEvents()
+
+
 
 }//end startGame()
+
+// $('.circle:active').prop
