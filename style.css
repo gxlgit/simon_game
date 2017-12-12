@@ -1,6 +1,7 @@
 body {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: black;
   color: white;
   font-family: arial;
@@ -14,56 +15,71 @@ header {
 }
 h1 {
 /*font-family: 'Press Start 2P', cursive;*/
-font-family: 'Bungee Shade', cursive;
+  font-family: 'Bungee Shade', cursive;
   font-size: 150px;
-  border: solid 1px white;
+  /*border: solid 1px white;*/
+  margin: 0 auto;
+  padding: 5px;
 }
+
 nav {
-  border: solid 1px white;
-  /*display: flex;
-  justify-content: center;
-  align-items: center;*/
-}
-nav {
+  width: 50%;
+  height: 30px;
   display: flex;
-  justify-content: center;
-  border: solid 1px white;
+  justify-content: space-around;
+  padding: 5px;
+  border-top: solid 1px white;
+  border-bottom: solid 1px white;
 }
 
 a {
-  padding: 5px;
+  padding: 5px 10px;
+  font-size: 20px;
   text-decoration: none;
-}
-
-
-.score {
-  display: flex;
-  justify-content: center;
-  border: solid 1px white;
-}
-.score div {
-  padding: 5px;
 }
 
 .game {
   display: flex;
+  flex-wrap:wrap;
   justify-content: space-around;
-  border: solid 1px white;
+  padding: 30px;
+  /*border: solid 1px white;*/
+}
+
+.score {
+  width: 50%;
+  height: 30px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  /*justify-content: flex-end;*/
+  /*border: solid 1px white;*/
+  padding: 10px;
+}
+.score div {
+  padding: 5px;
+  flex-grow: 2;
+
+}
+.start-bttn {
+  flex-grow: 3;
+  justify-content: flex-start;
 }
 
 .circle {
+  
   opacity: .5;
   border-radius: 50%;
   height: 200px;
   width: 200px;
   background-color: white;
+  /*border: solid 4px white;*/
 }
 
 
 .circle:active {
   opacity: 1;
   border: solid 4px white;
-
 }
 
 /*this class can be added to make a circle button flash*/
@@ -86,4 +102,5 @@ a {
 
 .rules {
   font-family: arial;
+  padding: 30px 10px 30px 10px;
 }
