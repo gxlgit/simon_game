@@ -138,11 +138,17 @@ function checkIfCorrect(){
   }
 }//end checkIfCorrect()
 
-//FIX make New Game function
+function disableStart(toggleValue) {
+  $('.start-bttn').prop('disabled', toggleValue)
+}
+
+function disableNewgame(toggleValue) {
+  $('.newgame-bttn').prop('disabled', toggleValue)
+}
 
 function startGame( event ) {
   //disable start button
-  $('.start-bttn').prop('disabled', true)
+  disableStart(true)
 
   //on click generate random color pattern
   generateRandomColorPattern()
@@ -170,12 +176,8 @@ function startGame( event ) {
                               setTimeout(function(){ dialog.hide()}, 1000)
                             }
                           },2000)//end setInterval
-
-
-
-
-
-
 }//end startGame()
 
-// $('.circle:active').prop
+function newGame() {
+
+}//newGame()
