@@ -50,6 +50,14 @@ function hideGameDialog(){
   setTimeout(function(){ dialog.hide()}, 1000)
 }
 
+let getInitialsDialog = $('.get-initials')
+//FIX ---NEED to actually implement this in addNewHallOfFamer
+function showGetInitialsDialog(){
+  getInitialsDialog.show()
+}//showGetInitialsDialog()
+
+//showGetInitialsDialog()
+
 function setupHallOfFame(){
   //Setup Hall of Fame by reading from local storage
   //https://www.w3schools.com/html/html5_webstorage.asp

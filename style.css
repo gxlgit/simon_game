@@ -15,7 +15,10 @@ dialog {
   text-align: center;
   font-family: 'Press Start 2P', sans-serif;
   font-size: 25px;
+}
 
+.get-initials {
+  font-size: 10px;
 }
 
 header {
