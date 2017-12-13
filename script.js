@@ -3,6 +3,7 @@
 // by Gwen Latasa
 //***************************************************************
 
+
 //global variable that indicates if it's the players or Simon's turn
 let playerToggle = false
 let playerScore = 0
@@ -10,10 +11,10 @@ let simonScore = 0
 let currentLevel = 1
 let levels = [{level:1, flashes:4},
               {level:2, flashes:5},
-              {level:3, flashes:6},
-              {level:4, flashes:7},
-              {level:5, flashes:8}]
-
+              {level:3, flashes:6}]//,
+              // {level:4, flashes:7},
+              // {level:5, flashes:8}]
+let theHallOfFame = []
 let randomColorPattern = []
 // let numOfFlashes = 4
 let colorsAvailable = ['red', 'blue', 'yellow', 'green']
@@ -30,28 +31,88 @@ for(x in colorsAvailable){
   $(`.${colorsAvailable[x]}-circle`).css('background-color', colorsAvailable[x])
 }
 
+setupHallOfFame()
+
+function setupHallOfFame(){
+  //Setup Hall of Fame
+  //https://www.w3schools.com/html/html5_webstorage.asp
+  if (typeof(Storage) !== "undefined") {
+      //if there is localStorage then populate HTML with high scores
+      for( let x =1; x <=10; x++){
+        let currInitial =localStorage.getItem(`initial${x}`)
+        let currScore = localStorage.getItem(`score${x}`)
+          //if currItem is not undefined
+          if(currInitial && currScore){
+            //FIX -add an extra space in 1-9 so that items line up?
+            $(`.init${x}`).html(currInitial)
+            $(`.high-score${x}`).html(currScore)
+            theHallOfFame[x-1] = [currInitial, parseInt(currScore,10 )]
+          }//end if
+      }//end for
+  }//end if storage
+  // else {
+  //     // Sorry! No Web Storage support..
+  //     console.log('no local storage')
+  // }
+}//setupHallOfFame()
+
+
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('GXL', 0)
+// addNewHallOfFamer('PRL', 0)
+
+function addNewHallOfFamer (theInitials, theScore) {
+  //1st check to see if score is high enough to be on list
+  //by checking to see if it's greater than the last score
+  //on the list
+
+    //FIX should get user input on initials
+  if (theHallOfFame.length < 10) {
+    theHallOfFame.push([theInitials, theScore])
+  }
+  else {
+      //if so append item to list
+      if(theScore > theHallOfFame[theHallOfFame.length -1][1]){
+        theHallOfFame.pop()
+        theHallOfFame.push([theInitials, theScore])
+      }
+      //else score is not high enough
+      else { return }
+  }
+  //sort list so that it's in order
+  theHallOfFame.sort(function(a, b){return b[1] - a[1]});
+  //update localStorage w/new list of high scores
+  theHallOfFame.forEach(function(thePerson, index){
+            localStorage.setItem(`initial${index+1}`, thePerson[0])
+            localStorage.setItem(`score${index+1}`, thePerson[1])
+  })
+  //5th update html w/updateHallOfFame
+  setupHallOfFame()
+}//end addNewHallOfFamer()
 
 function turnOnPlayerClickEvents(){
   // playerColorPattern = []
   for( x in colorsAvailable){
     let theCircle =$('.' + colorsAvailable[x] +'-circle')
     theCircle.on('click', checkIfCorrect)
-
-
     // theCircle.addClass('circle-active:active')
     // theCircle.on('mouseover', function(){$(this.addClass('circle-active')}).on('mouseout',
     //                           function(){$(this).removeClass('circle-active')})
   }//end for
-
 }//end turnOnPlayerClickEvents()
 
 function turnOffPlayerClickEvents(){
   for( x in colorsAvailable){
      $('.' + colorsAvailable[x] +'-circle').off() //.removeClass('circle-active')
   }//end for
-
-  //enable startButton
-  $('.start-bttn').prop('disabled', false)
 
   playerToggle = false
 }
@@ -98,29 +159,27 @@ function checkIfCorrect(){
   if(parseInt($(this).attr('data-color'), 10) === randomColorPattern.shift())
   {
     if( randomColorPattern.length === 0 ){
-      //FIX change DOM to say You win!
-      if(currentLevel === levels.length){
+      //check if the currentLevel is the last level
+      if( currentLevel === levels.length ){
+        //FIX put this DOM update into its own function
         let dialog = $('.game-messages')
         dialog.html('You Win!')
         dialog.show()
         setTimeout(function(){ dialog.hide()}, 1000)
 
-        //FIX-disable start
-        // $('.start-bttn').prop('disabled', true)
-        //FIX-prompt New Game?
-
+        addNewHallOfFamer('GXL', playerScore+1)
       }
       else {
-        //alert( "Level Up!")
         let dialog = $('.game-messages')
         dialog.html('Level Up!')
         dialog.show()
         setTimeout(function(){ dialog.hide()}, 1000)
         currentLevel += 1
         $('.level').html('Level: ' + currentLevel)
+        disableStart(false)
       }
       playerScore += 1
-      $('.player-score').html('You: ' + playerScore)
+      $('.player-score').html('Score: ' + playerScore)
 
       turnOffPlayerClickEvents()
     }
@@ -129,22 +188,26 @@ function checkIfCorrect(){
   }
   else{
     let dialog = $('.game-messages')
+    // disableStart(true)
     dialog.html('You Lose')
     dialog.show()
     setTimeout(function(){ dialog.hide()}, 1000)
-    simonScore += 1
-    $('.simon-score').html('Simon: ' + simonScore)
+    // simonScore += 1
+    // $('.simon-score').html('Simon: ' + simonScore)
     turnOffPlayerClickEvents()
   }
 }//end checkIfCorrect()
 
 function disableStart(toggleValue) {
+  //true means  disable
+  //false means
+  console.log('disableval'+ toggleValue)
   $('.start-bttn').prop('disabled', toggleValue)
 }
 
-function disableNewgame(toggleValue) {
-  $('.newgame-bttn').prop('disabled', toggleValue)
-}
+// function disableNewgame(toggleValue) {
+//   $('.newgame-bttn').prop('disabled', toggleValue)
+// }
 
 function startGame( event ) {
   //disable start button
@@ -164,9 +227,7 @@ function startGame( event ) {
   //when player clicks ready, flash the random color pattern
   flashColorPattern()
 
-
   //set an interval to check if player toggle set to true
-
   let checkIfPlayerTurn = setInterval( function(){
                             if(playerToggle){
                               clearInterval(checkIfPlayerTurn)
@@ -178,6 +239,6 @@ function startGame( event ) {
                           },2000)//end setInterval
 }//end startGame()
 
-function newGame() {
-
-}//newGame()
+// function newGame() {
+//
+// }//newGame()
