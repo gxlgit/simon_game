@@ -53,6 +53,14 @@ a:hover {
   color: yellow;
 }
 
+a:active {
+  color: red;
+}
+
+a:visited {
+  color: green;
+}
+
 .game {
   display: flex;
   flex-wrap:wrap;
