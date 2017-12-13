@@ -10,8 +10,8 @@ let playerScore = 0
 let simonScore = 0
 let currentLevel = 1
 let levels = [{level:1, flashes:4},
-              {level:2, flashes:5},
-              {level:3, flashes:6}]//,
+              {level:2, flashes:5}]//,
+            //  {level:3, flashes:6}]//,
               // {level:4, flashes:7},
               // {level:5, flashes:8}]
 let theHallOfFame = []
@@ -57,32 +57,22 @@ function setupHallOfFame(){
 }//setupHallOfFame()
 
 
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('GXL', 0)
-// addNewHallOfFamer('PRL', 0)
-
 function addNewHallOfFamer (theInitials, theScore) {
   //1st check to see if score is high enough to be on list
   //by checking to see if it's greater than the last score
   //on the list
 
-    //FIX should get user input on initials
   if (theHallOfFame.length < 10) {
-    theHallOfFame.push([theInitials, theScore])
+    //get initials
+    theInitials = prompt('User Initials:')
+    theHallOfFame.push([theInitials.slice(0,3).toUpperCase(), theScore])
   }
   else {
       //if so append item to list
       if(theScore > theHallOfFame[theHallOfFame.length -1][1]){
+        theInitials = prompt('User Initials:')
         theHallOfFame.pop()
-        theHallOfFame.push([theInitials, theScore])
+        theHallOfFame.push([theInitials.slice(0,3).toUpperCase(), theScore])
       }
       //else score is not high enough
       else { return }
@@ -161,13 +151,23 @@ function checkIfCorrect(){
     if( randomColorPattern.length === 0 ){
       //check if the currentLevel is the last level
       if( currentLevel === levels.length ){
-        //FIX put this DOM update into its own function
-        let dialog = $('.game-messages')
-        dialog.html('You Win!')
-        dialog.show()
-        setTimeout(function(){ dialog.hide()}, 1000)
+        let x =0
+        let youWinInterval = setInterval(
+          function(){
+            if(x=== 0){
+              let dialog = $('.game-messages')
+              dialog.html('You Win!')
+              dialog.show()
+              setTimeout(function(){ dialog.hide()
+              x++}, 1000)
+            }//end if
+            else{
+              clearInterval(youWinInterval)
+              addNewHallOfFamer('GXL', playerScore+1)
+            }
+        }, 1500)//end setInterval
 
-        addNewHallOfFamer('GXL', playerScore+1)
+
       }
       else {
         let dialog = $('.game-messages')
