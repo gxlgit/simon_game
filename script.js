@@ -25,16 +25,33 @@ let colorsAvailable = ['red', 'blue', 'yellow', 'green']
 let startButton = $('.start-bttn')
 startButton.on('click', startGame)
 
-//populate HTML with circles
-for(x in colorsAvailable){
-  $('.game').append(`<div class='circle ${colorsAvailable[x]}-circle' data-color=${x}></div>`)
-  $(`.${colorsAvailable[x]}-circle`).css('background-color', colorsAvailable[x])
-}
+
 
 setupHallOfFame()
+makeCircles()
+
+
+function makeCircles(){
+  //populate HTML with circles
+  for(x in colorsAvailable){
+    $('.game').append(`<div class='circle ${colorsAvailable[x]}-circle' data-color=${x}></div>`)
+    $(`.${colorsAvailable[x]}-circle`).css('background-color', colorsAvailable[x])
+  }
+}//makeCircles()
+
+let dialog = $('.game-messages')
+
+function showGameDialog( dialogText ){
+  dialog.html(dialogText)
+  dialog.show()
+}//showGameDialog()
+
+function hideGameDialog(){
+  setTimeout(function(){ dialog.hide()}, 1000)
+}
 
 function setupHallOfFame(){
-  //Setup Hall of Fame
+  //Setup Hall of Fame by reading from local storage
   //https://www.w3schools.com/html/html5_webstorage.asp
   if (typeof(Storage) !== "undefined") {
       //if there is localStorage then populate HTML with high scores
@@ -57,10 +74,11 @@ function setupHallOfFame(){
 }//setupHallOfFame()
 
 
-function addNewHallOfFamer (theInitials, theScore) {
+function addNewHallOfFamer (theScore) {
   //1st check to see if score is high enough to be on list
   //by checking to see if it's greater than the last score
   //on the list
+  let theInitials =''
 
   if (theHallOfFame.length < 10) {
     //get initials
@@ -155,25 +173,20 @@ function checkIfCorrect(){
         let youWinInterval = setInterval(
           function(){
             if(x=== 0){
-              let dialog = $('.game-messages')
-              dialog.html('You Win!')
-              dialog.show()
+              showGameDialog('You Win!')
               setTimeout(function(){ dialog.hide()
               x++}, 1000)
             }//end if
             else{
               clearInterval(youWinInterval)
-              addNewHallOfFamer('GXL', playerScore+1)
+              addNewHallOfFamer(playerScore+1)
             }
         }, 1500)//end setInterval
-
-
-      }
+      }// end if currentLevel is last level
       else {
-        let dialog = $('.game-messages')
-        dialog.html('Level Up!')
-        dialog.show()
-        setTimeout(function(){ dialog.hide()}, 1000)
+        showGameDialog('Level Up!')
+        setTimeout(function(){ dialog.hide()
+        x++}, 1000)
         currentLevel += 1
         $('.level').html('Level: ' + currentLevel)
         disableStart(false)
@@ -182,16 +195,26 @@ function checkIfCorrect(){
       $('.player-score').html('Score: ' + playerScore)
 
       turnOffPlayerClickEvents()
-    }
+    }//end if end of randomColorPattern
     //else
     //then keep going
   }
   else{
-    let dialog = $('.game-messages')
-    // disableStart(true)
-    dialog.html('You Lose')
-    dialog.show()
-    setTimeout(function(){ dialog.hide()}, 1000)
+    let x = 0
+    let youLoseInterval = setInterval(
+      function(){
+        if(x=== 0){
+          showGameDialog('You Lose!')
+          setTimeout(function(){ dialog.hide()
+          x++}, 1000)
+        }//end if
+        else{
+          clearInterval(youLoseInterval)
+          addNewHallOfFamer(playerScore)
+        }
+    }, 1500)//end setInterval
+    // showGameDialog('You Lose')
+    // setTimeout(function(){ dialog.hide()}, 1000)
     // simonScore += 1
     // $('.simon-score').html('Simon: ' + simonScore)
     turnOffPlayerClickEvents()
