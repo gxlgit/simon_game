@@ -7,14 +7,15 @@
 //global variable that indicates if it's the players or Simon's turn
 let playerToggle = false
 let playerScore = 0
-let simonScore = 0
+//let simonScore = 0
 let currentLevel = 1
 let levels = [{level:1, flashes:4},
-              {level:2, flashes:5}]//,
-            //  {level:3, flashes:6}]//,
-              // {level:4, flashes:7},
-              // {level:5, flashes:8}]
+              {level:2, flashes:5},
+             {level:3, flashes:6},
+              {level:4, flashes:7},
+              {level:5, flashes:8}]
 let theHallOfFame = []
+let theInitials = '' //for adding to Hall of Fame
 let randomColorPattern = []
 // let numOfFlashes = 4
 let colorsAvailable = ['red', 'blue', 'yellow', 'green']
@@ -22,11 +23,12 @@ let colorsAvailable = ['red', 'blue', 'yellow', 'green']
 
 
 //Setup JQuery objects and listeners
-let startButton = $('.start-bttn')
+const startButton = $('.start-bttn')
 startButton.on('click', startGame)
+$('#initials-bttn').on('click', enterInitials)
+$('#initials-bttn').on('enter', enterInitials)
 
-
-
+//Setup HTML
 setupHallOfFame()
 makeCircles()
 
@@ -39,7 +41,7 @@ function makeCircles(){
   }
 }//makeCircles()
 
-let dialog = $('.game-messages')
+const dialog = $('.game-messages')
 
 function showGameDialog( dialogText ){
   dialog.html(dialogText)
@@ -50,13 +52,20 @@ function hideGameDialog(){
   setTimeout(function(){ dialog.hide()}, 1000)
 }
 
-let getInitialsDialog = $('.get-initials')
-//FIX ---NEED to actually implement this in addNewHallOfFamer
-function showGetInitialsDialog(){
+const getInitialsDialog = $('.get-initials')
+function showGetInitialsDialog() {
+  dialog.hide()
   getInitialsDialog.show()
 }//showGetInitialsDialog()
 
-//showGetInitialsDialog()
+function enterInitials(event){
+  theInitials = $('#initials-box').val().slice(0,3).toUpperCase()
+  getInitialsDialog.hide()
+  dialog.show()
+  //return false otherwise the page refreshes itself!!!!
+  return false
+}//enterInitials()
+
 
 function setupHallOfFame(){
   //Setup Hall of Fame by reading from local storage
@@ -86,32 +95,59 @@ function addNewHallOfFamer (theScore) {
   //1st check to see if score is high enough to be on list
   //by checking to see if it's greater than the last score
   //on the list
-  let theInitials =''
+  theInitials = ''
 
   if (theHallOfFame.length < 10) {
     //get initials
-    theInitials = prompt('User Initials:')
-    theHallOfFame.push([theInitials.slice(0,3).toUpperCase(), theScore])
+    showGetInitialsDialog()
+    //theHallOfFame.push([theInitials, theScore])
+    let hallOfFameInterval = setInterval( function()
+    {
+      //FIX make this DRY
+      if(theInitials){
+        clearInterval(hallOfFameInterval)
+        theHallOfFame.push([theInitials, theScore])
+
+        //sort list so that it's in order
+        theHallOfFame.sort(function(a, b){return b[1] - a[1]});
+        //update localStorage w/new list of high scores
+        theHallOfFame.forEach(function(thePerson, index){
+                  localStorage.setItem(`initial${index+1}`, thePerson[0])
+                  localStorage.setItem(`score${index+1}`, thePerson[1])
+                })//end forEach
+        //5th update html w/updateHallOfFame
+        setupHallOfFame()
+      }
+    }, 1000) //end setInterval
   }
   else {
       //if so append item to list
       if(theScore > theHallOfFame[theHallOfFame.length -1][1]){
-        theInitials = prompt('User Initials:')
-        theHallOfFame.pop()
-        theHallOfFame.push([theInitials.slice(0,3).toUpperCase(), theScore])
-      }
+        //theInitials = prompt('User Initials:')
+
+        showGetInitialsDialog()
+        let hallOfFameInterval = setInterval( function()
+        {
+          if(theInitials){
+            clearInterval(hallOfFameInterval)
+            theHallOfFame.pop()
+            theHallOfFame.push([theInitials, theScore])
+
+            //sort list so that it's in order
+            theHallOfFame.sort(function(a, b){return b[1] - a[1]});
+            //update localStorage w/new list of high scores
+            theHallOfFame.forEach(function(thePerson, index){
+                      localStorage.setItem(`initial${index+1}`, thePerson[0])
+                      localStorage.setItem(`score${index+1}`, thePerson[1])
+                    })//end forEach
+            //5th update html w/updateHallOfFame
+            setupHallOfFame()
+          }
+        }, 1000) //end setInterval
+      }//end if
       //else score is not high enough
       else { return }
-  }
-  //sort list so that it's in order
-  theHallOfFame.sort(function(a, b){return b[1] - a[1]});
-  //update localStorage w/new list of high scores
-  theHallOfFame.forEach(function(thePerson, index){
-            localStorage.setItem(`initial${index+1}`, thePerson[0])
-            localStorage.setItem(`score${index+1}`, thePerson[1])
-  })
-  //5th update html w/updateHallOfFame
-  setupHallOfFame()
+  }//end else
 }//end addNewHallOfFamer()
 
 function turnOnPlayerClickEvents(){
@@ -166,6 +202,14 @@ function flashColorPattern() {
       x++
     }, 1000)//end set interval
 
+  //EXPERIMENTAL CODE
+  // randomColorPattern.forEach( function(colorIndex){
+  //   let currCircle = $(`.${colorsAvailable[colorIndex]}-circle`)
+  //   console.log('flsh the circle')
+  //   setTimeout(function(){currCircle.addClass('flash')},(.5)*500)
+  //   setTimeout(function(){currCircle.removeClass("flash")},(1.5)*500)
+  // })
+  // playerToggle =true
 }//end flashColorPattern()
 
 function checkIfCorrect(){
@@ -178,16 +222,17 @@ function checkIfCorrect(){
       //check if the currentLevel is the last level
       if( currentLevel === levels.length ){
         let x =0
+        //set an interval here to show win dialog before
+        //checking for hall of fame status
         let youWinInterval = setInterval(
           function(){
             if(x=== 0){
               showGameDialog('You Win!')
-              setTimeout(function(){ dialog.hide()
-              x++}, 1000)
+              x++
             }//end if
             else{
               clearInterval(youWinInterval)
-              addNewHallOfFamer(playerScore+1)
+              addNewHallOfFamer(playerScore+(currentLevel * 10))
             }
         }, 1500)//end setInterval
       }// end if currentLevel is last level
@@ -199,7 +244,7 @@ function checkIfCorrect(){
         $('.level').html('Level: ' + currentLevel)
         disableStart(false)
       }
-      playerScore += 1
+      playerScore += (currentLevel * 10)
       $('.player-score').html('Score: ' + playerScore)
 
       turnOffPlayerClickEvents()
@@ -208,21 +253,21 @@ function checkIfCorrect(){
     //then keep going
   }
   else{
-    let x = 0
-    let youLoseInterval = setInterval(
-      function(){
-        if(x=== 0){
-          showGameDialog('You Lose!')
-          setTimeout(function(){ dialog.hide()
-          x++}, 1000)
-        }//end if
-        else{
-          clearInterval(youLoseInterval)
-          addNewHallOfFamer(playerScore)
-        }
-    }, 1500)//end setInterval
-    // showGameDialog('You Lose')
-    // setTimeout(function(){ dialog.hide()}, 1000)
+    if( playerScore ) {
+        let x =0
+        let youLoseInterval = setInterval(
+          function(){
+            if(x=== 0){
+              showGameDialog('You Lose')
+              x++
+            }//end if
+            else{
+              clearInterval(youLoseInterval)
+              addNewHallOfFamer(playerScore)
+            }
+        }, 1500)//end setInterval
+    }//end if
+    else { showGameDialog('You Lose') }
     // simonScore += 1
     // $('.simon-score').html('Simon: ' + simonScore)
     turnOffPlayerClickEvents()
@@ -231,8 +276,6 @@ function checkIfCorrect(){
 
 function disableStart(toggleValue) {
   //true means  disable
-  //false means
-  console.log('disableval'+ toggleValue)
   $('.start-bttn').prop('disabled', toggleValue)
 }
 
@@ -267,7 +310,7 @@ function startGame( event ) {
                               dialog.show()
                               setTimeout(function(){ dialog.hide()}, 1000)
                             }
-                          },2000)//end setInterval
+                          },1000)//end setInterval
 }//end startGame()
 
 // function newGame() {

@@ -24,8 +24,8 @@
       <dialog class = 'game-messages'></dialog>
       <dialog class = 'get-initials'>
         <form> Enter Initials:
-          <input type="text" name="Initials" value="">
-          <button type="submit">Enter</button>
+          <input type="text" name="Initials" value="" id='initials-box'>
+          <button  id='initials-bttn'>Enter</button>
         </form>
       </dialog>
 
@@ -33,7 +33,9 @@
        <!-- Divs for circles generated in script.js -->
       </div>
       <div class="score-box">
-        <button type="button" class="newgame-bttn" onClick="window.location.reload()">NEW GAME</button>
+
+        <button type="button" class="newgame-bttn"
+                onClick="window.location.reload()">NEW GAME</button>
         <button type="button" class="start-bttn">START</button>
 
         <div class="scores">

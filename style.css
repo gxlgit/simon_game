@@ -20,6 +20,10 @@ dialog {
 .get-initials {
   font-size: 10px;
 }
+#initials-box{
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 12px;
+}
 
 header {
   display: flex;
@@ -142,6 +146,8 @@ button {
 /*this class can be added to make a circle button flash*/
 .flash {
   opacity: 1;
+  /* border: solid 6px white; */
+
   /*background-color: yellow;*/
   /*animation-name: colorFlash;
   animation-duration: 4s;*/
