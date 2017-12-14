@@ -27,10 +27,18 @@ dialog {
 
 header {
   display: flex;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
+/* position: fixed;
+top: 0
+background-color: black;
+z-index: 1; */
+
 }
+
+
 h1 {
 /*font-family: 'Press Start 2P', cursive;*/
   font-family: 'Bungee Shade', sans-serif;
@@ -138,7 +146,7 @@ button {
 }
 
 
-.circle:active {
+.circle-hover:active {
   opacity: 1;
   border: solid 4px white;
 }

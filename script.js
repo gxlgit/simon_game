@@ -24,7 +24,7 @@ let colorsAvailable = ['red', 'blue', 'yellow', 'green']
 
 //Setup JQuery objects and listeners
 const startButton = $('.start-bttn')
-startButton.on('click', startGame)
+startButton.on('click', startLevel)
 $('#initials-bttn').on('click', enterInitials)
 $('#initials-bttn').on('enter', enterInitials)
 
@@ -59,7 +59,7 @@ function showGetInitialsDialog() {
 }//showGetInitialsDialog()
 
 function enterInitials(event){
-  theInitials = $('#initials-box').val().slice(0,3).toUpperCase()
+  theInitials = $('#initials-box').val().slice(0,3).toUpperCase() + ' '
   getInitialsDialog.hide()
   dialog.show()
   //return false otherwise the page refreshes itself!!!!
@@ -86,7 +86,6 @@ function setupHallOfFame(){
   }//end if storage
   // else {
   //     // Sorry! No Web Storage support..
-  //     console.log('no local storage')
   // }
 }//setupHallOfFame()
 
@@ -117,6 +116,7 @@ function addNewHallOfFamer (theScore) {
                 })//end forEach
         //5th update html w/updateHallOfFame
         setupHallOfFame()
+        window.location.hash = 'HallOfFame';
       }
     }, 1000) //end setInterval
   }
@@ -142,6 +142,7 @@ function addNewHallOfFamer (theScore) {
                     })//end forEach
             //5th update html w/updateHallOfFame
             setupHallOfFame()
+            window.location.hash = 'HallOfFame';
           }
         }, 1000) //end setInterval
       }//end if
@@ -151,7 +152,8 @@ function addNewHallOfFamer (theScore) {
 }//end addNewHallOfFamer()
 
 function turnOnPlayerClickEvents(){
-  // playerColorPattern = []
+
+  $('.circle').addClass('circle-hover')
   for( x in colorsAvailable){
     let theCircle =$('.' + colorsAvailable[x] +'-circle')
     theCircle.on('click', checkIfCorrect)
@@ -162,6 +164,7 @@ function turnOnPlayerClickEvents(){
 }//end turnOnPlayerClickEvents()
 
 function turnOffPlayerClickEvents(){
+  $('.circle').removeClass('circle-hover')
   for( x in colorsAvailable){
      $('.' + colorsAvailable[x] +'-circle').off() //.removeClass('circle-active')
   }//end for
@@ -184,6 +187,7 @@ function flashColorPattern() {
   //every 1 sec it will set the turnFlashOn and turnFlashOff timers for each circle
   //in the randomColorPattern
   //this keeps colors from flashing at the same time or out of order
+
   let x = 0
   let theTimer = setInterval(function(){
 
@@ -283,7 +287,7 @@ function disableStart(toggleValue) {
 //   $('.newgame-bttn').prop('disabled', toggleValue)
 // }
 
-function startGame( event ) {
+function startLevel( event ) {
   //disable start button
   disableStart(true)
 
@@ -297,9 +301,10 @@ function startGame( event ) {
   dialog.show()
   setTimeout(function(){ dialog.hide()}, 1000)
 
-
   //when player clicks ready, flash the random color pattern
   flashColorPattern()
+
+
 
   //set an interval to check if player toggle set to true
   let checkIfPlayerTurn = setInterval( function(){
