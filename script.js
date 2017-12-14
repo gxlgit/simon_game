@@ -39,7 +39,7 @@ makeCircles()
 function makeCircles(){
   //populate HTML with circles
   for(x in colorsAvailable){
-    $('.game').append(`<div class='circle ${colorsAvailable[x]}-circle' data-color=${x}></div>`)
+    $('.game').append(`<div class='circle ${colorsAvailable[x]}-circle circle-on' data-color=${x}></div>`)
     $(`.${colorsAvailable[x]}-circle`).css('background-color', colorsAvailable[x])
   }
 }//makeCircles()
@@ -237,6 +237,7 @@ function checkIfCorrect(){
           function(){
             if(x=== 0){
               showGameDialog('You Win!')
+              $('.circle').addClass('circle-on')
               x++
             }//end if
             else{
@@ -289,7 +290,8 @@ function checkIfCorrect(){
 function startLevel( event ) {
   //disable start button
   disableStart(true)
-
+  //turn down circle opacity
+  $('.circle').removeClass('circle-on')
   //on click generate random color pattern
   generateRandomColorPattern()
 

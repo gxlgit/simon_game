@@ -132,16 +132,16 @@ button {
   border: solid 3px grey;
 }
 
-.start-bttn:hover {
+/* .start-bttn:hover {
   border: solid 3px green;
-}
+} */
 
 .start-active{
   border: solid 3px red;
 }
 
 .circle {
-  opacity: .5;
+  opacity: .45;
   border-radius: 50%;
   height: 200px;
   width: 200px;
@@ -149,6 +149,9 @@ button {
   /*border: solid 4px white;*/
 }
 
+.circle-on{
+  opacity: 1;
+}
 
 .circle-hover:active {
   opacity: 1;
