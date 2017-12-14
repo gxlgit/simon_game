@@ -164,6 +164,39 @@ button {
 }*/
 
 .rules {
+
+  padding: 150px 10px 30px 10px;
+}
+h5 {
+  font-family: 'Bungee Shade', sans-serif;;
+  font-size: 40px;
+  margin: 0;
+  padding: 10px;
+  border-bottom: solid 1px white;
+  border-top:solid 1px white;
+}
+p {
   font-family: arial;
-  padding: 30px 10px 30px 10px;
+  padding: 10px;
+}
+h6 {
+  font-family: 'Bungee Shade', sans-serif;;
+  font-size: 20px;
+  margin: 0;
+  padding: 5px 5px 5px 10px;
+}
+
+h6 span {
+  font-family: arial;
+  font-size: 15px;
+}
+.hall-of-fame {
+
+  padding: 100px 10px 30px 10px;
+}
+ol {
+    margin: 10px 20px;
+    padding: 10px 0px 10px 70px;
+  font-size: 20px;
+  font-family: 'Press Start 2P', sans-serif;
 }
