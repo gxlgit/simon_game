@@ -12,7 +12,8 @@ Currently levels are set like this:
               {level:2, flashes:5},
               {level:3, flashes:6},
               {level:4, flashes:7},
-              {level:5, flashes:8}]```
+              {level:5, flashes:8}]
+ ```
 
 Currently the number of circles and the color are set like this.
 ```let colorsAvailable = ['red', 'blue', 'yellow', 'green']```
