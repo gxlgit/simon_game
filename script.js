@@ -23,14 +23,17 @@ let colorsAvailable = ['red', 'blue', 'yellow', 'green']
 
 
 //Setup JQuery objects and listeners
+const dialog = $('.game-messages')
 const startButton = $('.start-bttn')
 startButton.on('click', startLevel)
+
 $('#initials-bttn').on('click', enterInitials)
 $('#initials-bttn').on('enter', enterInitials)
 
 //Setup HTML
 setupHallOfFame()
 makeCircles()
+
 
 
 function makeCircles(){
@@ -41,7 +44,16 @@ function makeCircles(){
   }
 }//makeCircles()
 
-const dialog = $('.game-messages')
+function disableStart(toggleValue) {
+  //true means  disable
+  startButton.prop('disabled', toggleValue)
+  if(toggleValue) {
+    startButton.removeClass('start-active')
+  }
+  else {
+    startButton.addClass('start-active')
+  }
+}
 
 function showGameDialog( dialogText ){
   dialog.html(dialogText)
@@ -140,7 +152,7 @@ function addNewHallOfFamer (theScore) {
                       localStorage.setItem(`initial${index+1}`, thePerson[0])
                       localStorage.setItem(`score${index+1}`, thePerson[1])
                     })//end forEach
-            //5th update html w/updateHallOfFame
+            //update html to show the currentHallofFame
             setupHallOfFame()
             window.location.hash = 'HallOfFame';
           }
@@ -152,7 +164,6 @@ function addNewHallOfFamer (theScore) {
 }//end addNewHallOfFamer()
 
 function turnOnPlayerClickEvents(){
-
   $('.circle').addClass('circle-hover')
   for( x in colorsAvailable){
     let theCircle =$('.' + colorsAvailable[x] +'-circle')
@@ -168,7 +179,6 @@ function turnOffPlayerClickEvents(){
   for( x in colorsAvailable){
      $('.' + colorsAvailable[x] +'-circle').off() //.removeClass('circle-active')
   }//end for
-
   playerToggle = false
 }
 
@@ -205,21 +215,16 @@ function flashColorPattern() {
       }//end else
       x++
     }, 1000)//end set interval
-
-  //EXPERIMENTAL CODE
-  // randomColorPattern.forEach( function(colorIndex){
-  //   let currCircle = $(`.${colorsAvailable[colorIndex]}-circle`)
-  //   console.log('flsh the circle')
-  //   setTimeout(function(){currCircle.addClass('flash')},(.5)*500)
-  //   setTimeout(function(){currCircle.removeClass("flash")},(1.5)*500)
-  // })
-  // playerToggle =true
 }//end flashColorPattern()
+
 
 function checkIfCorrect(){
   //function checks to see if the circle clicked
   //matches the first(next) item in the randomColorPattern
- console.log('clicked color'+ parseInt($(this).attr('data-color'), 10))
+ //console.log('clicked color'+ parseInt($(this).attr('data-color'), 10))
+
+ //hide 'Your Turn' dialog
+ dialog.hide()
   if(parseInt($(this).attr('data-color'), 10) === randomColorPattern.shift())
   {
     if( randomColorPattern.length === 0 ){
@@ -278,15 +283,9 @@ function checkIfCorrect(){
   }
 }//end checkIfCorrect()
 
-function disableStart(toggleValue) {
-  //true means  disable
-  $('.start-bttn').prop('disabled', toggleValue)
-}
 
-// function disableNewgame(toggleValue) {
-//   $('.newgame-bttn').prop('disabled', toggleValue)
-// }
 
+//starts the events for the level of the game
 function startLevel( event ) {
   //disable start button
   disableStart(true)
@@ -295,25 +294,19 @@ function startLevel( event ) {
   generateRandomColorPattern()
 
   // DOM message for player to begin
-
-  let dialog = $('.game-messages')
-  dialog.html('Get Ready!')
-  dialog.show()
+  showGameDialog('Get Ready!')
   setTimeout(function(){ dialog.hide()}, 1000)
 
   //when player clicks ready, flash the random color pattern
   flashColorPattern()
-
-
 
   //set an interval to check if player toggle set to true
   let checkIfPlayerTurn = setInterval( function(){
                             if(playerToggle){
                               clearInterval(checkIfPlayerTurn)
                               turnOnPlayerClickEvents()
-                              dialog.html('Your Turn!')
-                              dialog.show()
-                              setTimeout(function(){ dialog.hide()}, 1000)
+                              showGameDialog('Your Turn!')
+                              // setTimeout(function(){ dialog.hide()}, 1000)
                             }
                           },1000)//end setInterval
 }//end startGame()

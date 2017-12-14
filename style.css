@@ -97,7 +97,6 @@ a:visited {
   border-bottom: solid 1px white;
   /*border: solid 1px white;*/
   padding: 10px;
-
 }
 
 .scores {
@@ -130,9 +129,14 @@ button {
 }
 .start-bttn {
   margin: 0px 5px;
+  border: solid 3px grey;
 }
 
 .start-bttn:hover {
+  border: solid 3px green;
+}
+
+.start-active{
   border: solid 3px red;
 }
 
@@ -172,7 +176,6 @@ button {
 }*/
 
 .rules {
-
   padding: 150px 10px 30px 10px;
 }
 h5 {
@@ -199,12 +202,11 @@ h6 span {
   font-size: 15px;
 }
 .hall-of-fame {
-
   padding: 100px 10px 30px 10px;
 }
 ol {
-    margin: 10px 20px;
-    padding: 10px 0px 10px 70px;
+  margin: 10px 20px;
+  padding: 10px 0px 10px 70px;
   font-size: 20px;
   font-family: 'Press Start 2P', sans-serif;
 }
