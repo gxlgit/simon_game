@@ -4,9 +4,9 @@
 A hommage to the classic 80s game of Simon comes to life in this programmer expandable web version.
 
 ### How to play
-The player clicks *'Start'* to start the game.  Simon then flashes a random color pattern, which the user must then repeat exactly in order to move to the next level.
+The player clicks **'Start'** to start the game.  Simon then flashes a random color pattern, which the user must then repeat exactly in order to move to the next level.
 
-If the user gets a *'high score'* then they will be added to their local *Hall of Fame*.
+If the user gets a **'high score'** then they will be added to their local **Hall of Fame**.
 
 ### How to modify game
 The current script.js gives the game 5 different levels of difficulty.  Each level gets progressively harder by flashing a longer series of color flashes that the player must replicate. Level 1 starts with four flashes, Level 2 with five flashes, and so on.
