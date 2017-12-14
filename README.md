@@ -1,3 +1,5 @@
+[Simon Screenshot](https://github.com/gxlgit/simon_game/Screenshot.png "Simon Screenshot")
+
 # Simon Game
 
 ### About
