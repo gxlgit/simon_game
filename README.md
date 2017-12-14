@@ -8,14 +8,14 @@ The current script.js gives the game 5 different levels of difficulty.  Each lev
 Script.js can be easily customized to change the number and color of circles available to flash, as well as the number of flashes in each level.
 
 Currently levels are set like this:
-let levels = [{level:1, flashes:4},
+```let levels = [{level:1, flashes:4},
               {level:2, flashes:5},
               {level:3, flashes:6},
               {level:4, flashes:7},
-              {level:5, flashes:8}]
+              {level:5, flashes:8}]```
 
 Currently the number of circles and the color are set like this.
-let colorsAvailable = ['red', 'blue', 'yellow', 'green']
+```let colorsAvailable = ['red', 'blue', 'yellow', 'green']```
 
 This game is still a work on progress. And I'm working on finessing the timing of flashes as well as dialogs.  I'm also looking for a better way to deactivate pseudo classes.
 
