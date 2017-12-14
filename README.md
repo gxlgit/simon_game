@@ -1,6 +1,6 @@
-[Simon Screenshot](https://github.com/gxlgit/simon_game/Screenshot.png "Simon Screenshot")
-
 # Simon Game
+
+![Simon Screenshot](https://github.com/gxlgit/simon_game/blob/master/Screenshot.png "Simon Screenshot")
 
 ### About
 A hommage to the classic 80s game of Simon comes to life in this programmer expandable web version.
